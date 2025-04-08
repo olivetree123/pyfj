@@ -5,6 +5,7 @@ pyfj 命令行工具
 import os
 import subprocess
 import sys
+import re
 import click
 
 
@@ -64,6 +65,49 @@ class ProjectRenamer:
             return True
         except Exception as e:
             print(f"处理文件 {file_path} 时出错: {e}")
+            return False
+
+    def replace_pyproject_name(self, file_path="pyproject.toml"):
+        """替换pyproject.toml文件中的name字段
+        
+        Args:
+            file_path: pyproject.toml文件路径，默认为当前目录下的pyproject.toml
+            
+        Returns:
+            是否成功替换
+        """
+        try:
+            if not os.path.exists(file_path):
+                print(f"警告: 未找到{file_path}文件")
+                return False
+
+            with open(file_path, 'r', encoding='utf-8') as file:
+                content = file.read()
+
+            # 将项目名称中的下划线转换为连字符（符合PyPI命名规范）
+            pypi_name = self.new_name.replace('_', '-')
+
+            # 使用更精确的正则表达式只匹配[project]部分下的name字段
+            # 匹配[project]部分中的name字段，避免匹配到其他部分的name（如authors中的name）
+            pattern = r'[^\{] *name\s*=\s*"(\S+)"'
+            match = re.search(pattern, content, re.DOTALL)
+            if match:
+                # 提取匹配到的name值
+                old_name = match.group(1)
+                # 替换匹配到的值，保持原有的格式
+                new_content = content.replace(f'{old_name}', f'{pypi_name}')
+
+                # 将修改后的内容写回文件
+                with open(file_path, 'w', encoding='utf-8') as file:
+                    file.write(new_content)
+
+                return True
+            else:
+                print(f"警告: 在{file_path}中未找到[project]部分的name字段")
+                return False
+
+        except Exception as e:
+            print(f"处理文件{file_path}时出错: {e}")
             return False
 
     def check_environment(self):
@@ -140,7 +184,10 @@ class ProjectRenamer:
         # 4. 替换文件内容
         self.rename_files_content()
 
-        # 5. 重命名目录
+        # 5. 特别处理pyproject.toml文件
+        self.replace_pyproject_name()
+
+        # 6. 重命名目录
         self.rename_directory()
 
         print(f"项目{self.new_name}已创建完成")
@@ -172,7 +219,10 @@ class ProjectRenamer:
         # 5. 替换文件内容
         self.rename_files_content()
 
-        # 6. 重命名目录
+        # 6. 特别处理pyproject.toml文件
+        self.replace_pyproject_name()
+
+        # 7. 重命名目录
         self.rename_directory()
 
         print(f"项目已从 '{self.old_name}' 重命名为 '{self.new_name}'")

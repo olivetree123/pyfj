@@ -3,7 +3,7 @@
 A tool for creating django-ninja projects, based on the following template:
 ```bash
 # A project tempalte for django-ninja
-https://github.com/olivetree123/django_ninja_template
+[https://github.com/olivetree123/django_ninja_template](https://github.com/olivetree123/django_ninja_template)
 ```
 
 ## 安装

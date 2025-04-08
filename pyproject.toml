@@ -1,6 +1,6 @@
 [project]
 name = "pyfj"
-version = "0.1.1"
+version = "0.1.2"
 description = "A tool for creating django-ninja projects"
 authors = [
     {name = "gaojian",email = "olivetree123@163.com"}

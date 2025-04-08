@@ -165,6 +165,21 @@ class ProjectRenamer:
         if os.path.exists(self.old_name):
             os.rename(self.old_name, self.new_name)
 
+    def remove_git_directory(self):
+        """删除.git目录，清除克隆仓库的Git历史"""
+        git_dir = os.path.join(os.getcwd(), '.git')
+        if os.path.exists(git_dir) and os.path.isdir(git_dir):
+            try:
+                if os.name == 'nt':  # Windows系统
+                    self.run_command(f'rmdir /s /q "{git_dir}"')
+                else:  # Unix/Linux/MacOS系统
+                    self.run_command(f'rm -rf "{git_dir}"')
+                return True
+            except Exception as e:
+                print(f"删除.git目录时出错: {e}")
+                return False
+        return False
+
     def create_project(self):
         """创建新项目"""
         # 检查环境
@@ -189,6 +204,9 @@ class ProjectRenamer:
 
         # 6. 重命名目录
         self.rename_directory()
+
+        # 7. 删除.git目录
+        self.remove_git_directory()
 
         print(f"项目{self.new_name}已创建完成")
         return True

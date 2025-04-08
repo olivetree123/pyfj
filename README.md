@@ -1,54 +1,50 @@
 # PyFJ
 
-A tool for creating django-ninja projects, based on the following template:
-```bash
-# A project tempalte for django-ninja
-[https://github.com/olivetree123/django_ninja_template](https://github.com/olivetree123/django_ninja_template)
-```
+A tool for creating django-ninja projects, based on the template: [django_ninja_template](https://github.com/olivetree123/django_ninja_template)
 
-## 安装
+## Install
 
-推荐使用pipx安装：
+Recommended installation using pipx:
 ```bash
 pipx install pyfj
 ```
 
-也可以使用pip安装：
+You can also install using pip:
 ```bash
 pip install pyfj
 ```
 
-或者使用poetry:
+Or using poetry:
 
 ```bash
 poetry add pyfj
 ```
 
-## 使用方法
+## Usage
 
-安装后，您可以使用以下命令：
+After installation, you can use the following commands:
 
-### 创建新项目
+### 1. Create a new project
 
 ```bash
-# 交互模式
+# Interactive mode
 pyfj create
 
-# 直接指定名称
+# Directly specify the name
 pyfj create --name=myproject
 ```
 
-### 重命名项目
+### 2. Rename a project
 
 ```bash
-# 交互模式
+# Interactive mode
 pyfj rename
 
-# 直接指定名称
+# Directly specify the names
 pyfj rename --name=old_project_name --new_name=new_project_name
 ```
 
-### 查看帮助
+### 3. View help
 
 ```bash
 pyfj --help
@@ -56,29 +52,29 @@ pyfj create --help
 pyfj rename --help
 ```
 
-## 功能
+## Features
 
-1. 创建新项目 - 从Django Ninja模板创建项目
-2. 重命名项目 - 将现有项目重命名，包括文件内容和目录名
+1. Create new projects - Create a project from the Django Ninja template
+2. Rename projects - Rename an existing project, including file contents and directory names
 
-## 要求
+## Requirements
 
 - Python 3.8+
-- Git (仅用于创建新项目)
+- Git (only required for creating new projects)
 
-## 开发
+## Development
 
 ```bash
-# 克隆仓库
+# Clone the repository
 git clone https://github.com/olivetree123/pyfj.git
 cd pyfj
 
-# 安装依赖
+# Install dependencies
 poetry install
 
-# 以开发模式安装
+# Install in development mode
 poetry install -e .
 
-# 或者直接运行测试脚本
+# Or directly run the test script
 python test.py
 ```
